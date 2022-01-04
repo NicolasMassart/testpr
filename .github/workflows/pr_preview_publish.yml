@@ -16,7 +16,7 @@ jobs:
           ref: refs/pull/${{ github.event.number }}/merge # required to pull the PR code instead of the main one
           fetch-depth: 0 # Required for mkdocs to be able to display pages last update info
 
-      - name: Dump GitHub context # to display if 2 secret, or 1. If 1 env is fine.
+      - name: Dump GitHub secrets
         env:
           GITHUB_SECRETS: ${{ toJSON(secrets) }}
         run: echo "$GITHUB_SECRETS"
