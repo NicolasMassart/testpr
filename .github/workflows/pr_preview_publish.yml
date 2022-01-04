@@ -8,12 +8,18 @@ jobs:
   deploy:
     name: Build and publish PR preview
     runs-on: ubuntu-latest
+    environment: preview
     steps:
       - name: checkout code from repos
         uses: actions/checkout@v2
         with:
           ref: refs/pull/${{ github.event.number }}/merge # required to pull the PR code instead of the main one
           fetch-depth: 0 # Required for mkdocs to be able to display pages last update info
+
+      - name: Dump GitHub context # to display if 2 secret, or 1. If 1 env is fine.
+        env:
+          GITHUB_SECRETS: ${{ toJSON(secrets) }}
+        run: echo "$GITHUB_SECRETS"
 
       - name: generate PR slug
         shell: sh
@@ -28,6 +34,9 @@ jobs:
           target-folder: ${{ steps.generate_pr_slug.outputs.slug }}
           commit-message: Preview for ${{ steps.generate_pr_slug.outputs.slug }}
           single-commit: true
+
+      - name: Get additional Github env vars
+        uses: FranzDiebold/github-env-vars-action@b9b3a88cfa3ad9bde40c291143c28f918e2d1668 #v2.3.0
 
       - name: Add comment with link to preview doc
         uses: marocchino/sticky-pull-request-comment@39c5b5dc7717447d0cba270cd115037d32d28443 #v2.2.0
