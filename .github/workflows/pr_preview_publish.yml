@@ -35,7 +35,7 @@ jobs:
         with:
           branch: gh-pages # The branch the action should deploy to.
           folder: site # The folder the action should deploy.
-          repository-name: ${{ github.repository }}
+          repository-name: NicoFork/testpr
           target-folder: ${{ env.PR_VERSION }}
           commit-message: Preview for ${{ env.PR_VERSION }}
           single-commit: true
