@@ -2,7 +2,7 @@
 name: Publish PR preview
 
 # Controls when the action will run.
-on: [ pull_request ]
+on: [ pull_request_target ]
 
 jobs:
   deploy:
@@ -12,26 +12,21 @@ jobs:
       - name: checkout code from repos
         uses: actions/checkout@v2
         with:
-#          ref: refs/pull/${{ github.event.number }}/merge # required to pull the PR code instead of the main one
+          ref: refs/pull/${{ github.event.number }}/merge # required to pull the PR code instead of the main one
           fetch-depth: 0 # Required for mkdocs to be able to display pages last update info
 
-      - name: set environment vars from .env file
-        uses: c-py/action-dotenv-to-setenv@a6380f4d905f42adb7c065db63e6d66d75b971ad #v3
-        with:
-          env-file: '.env'
-
-      - name: Set PR_VERSION env vars
+      - name: generate PR slug
         shell: sh
-        run: |
-          echo "PR_VERSION=PR-${{ github.event.number }}" >> $GITHUB_ENV
+        id: generate_pr_slug
+        run: echo "::set-output name=slug::PR-${{ github.event.number }}"
 
       - name: Deploy Preview
         uses: JamesIves/github-pages-deploy-action@6ce741f5d4e01e15f9ea5ec96df1a43f522c330f #4.1.7
         with:
           branch: gh-pages # The branch the action should deploy to.
           folder: site # The folder the action should deploy.
-          target-folder: ${{ env.PR_VERSION }}
-          commit-message: Preview for ${{ env.PR_VERSION }}
+          target-folder: ${{ steps.generate_pr_slug.outputs.slug }}
+          commit-message: Preview for ${{ steps.generate_pr_slug.outputs.slug }}
           single-commit: true
 
       - name: Add comment with link to preview doc
@@ -40,5 +35,5 @@ jobs:
           header: preview
           recreate: true
           message: |
-            [Doc preview for this PR #${{ github.event.number }} is available](https://${{ env.CI_REPOSITORY_OWNER }}.github.io/${{ env.CI_REPOSITORY_NAME }}/${{ env.PR_VERSION }})
+            [Doc preview for this PR #${{ github.event.number }} is available](https://${{ env.CI_REPOSITORY_OWNER }}.github.io/${{ env.CI_REPOSITORY_NAME }}/${{ steps.generate_pr_slug.outputs.slug }})
 
