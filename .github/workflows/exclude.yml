@@ -9,7 +9,7 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
     # prevent wf to run on tags not on main
-    if: github.ref == 'refs/heads/main'
+#    if: github.ref == 'refs/heads/main'
     steps:
       - name: Hello
         run: echo "${GITHUB_REF}"
