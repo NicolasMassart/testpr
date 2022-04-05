@@ -11,5 +11,6 @@ jobs:
     # prevent wf to run on tags not on main
 #    if: github.ref == 'refs/heads/main'
     steps:
-      - name: Hello
-        run: echo "${GITHUB_REF}"
+      - name: Dump GitHub context
+        id: github_context_step
+        run: echo '${{ toJSON(github) }}'
