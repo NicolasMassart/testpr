@@ -9,7 +9,14 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
     # prevent wf to run on tags not on main
-    if: github.ref == 'refs/heads/main'
+#    if: github.base_ref == 'refs/heads/main'
     steps:
-      - name: Hello
-        run: echo "Hello!"
+      - name: checkout code from repos
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Get Branch
+        run: |
+          raw=$(git branch -r --contains ${{ github.ref }})
+          branch=${raw/origin\/}
+          echo "${branch}"
