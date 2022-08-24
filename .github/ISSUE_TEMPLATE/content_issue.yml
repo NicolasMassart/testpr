@@ -1,7 +1,7 @@
 name: Doc content issue report
 description: Create a report to help us improve our content.
 title: "[Content] "
-labels: ["bug", "triage"]
+labels: ["triage"]
 body:
   - type: markdown
     attributes:
@@ -15,7 +15,7 @@ body:
   - type: textarea
     id: decription
     attributes:
-      label: Describe the bug.
+      label: Describe the bug
       description: Add a clear and concise description of what the documentation issue is and what you expected the content to be.
       placeholder: Tell us what you see!
     validations:
@@ -32,21 +32,17 @@ body:
   - type: dropdown
     id: issue-type
     attributes:
-      label: Check the issue type in the following list
-      multiple: true
+      label: Issue type
+      description: Check the issue type in the following list
+      multiple: false
       options:
         - Missing content
         - Outdated content
         - Wrong content
         - Confusing or misleading content
         - Other
-  - type: input
-    id: other
-    attributes:
-      label: Other
-      description: If you checked other in the above list, please tell us more in this field.
     validations:
-      required: false
+      required: true
       
   - type: textarea
     id: change-suggestion
@@ -60,14 +56,14 @@ body:
     attributes:
       label: More context
       description: |
-       Add any other context about the problem here, for example, screenshots or a small demo video.
+        Add any other context about the problem here, for example, screenshots or a small demo video.
 
-        Tip: You can attach images files by clicking this area to highlight it and then dragging files in.
+        Tip: You can attach image and video files by copy and pasting or by clicking this area to highlight it and then dragging files in.
     validations:
       required: false
 
   - type: checkboxes
-    id: terms
+    id: recommendations
     attributes:
       label: Besu documentation issue recommendations
       description: By checking this box, you confirm that you read and followed the [Besu documentation issue guidelines](https://wiki.hyperledger.org/display/BESU/Raise+issues)
