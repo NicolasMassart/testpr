@@ -1,0 +1,76 @@
+name: Doc content issue report
+description: Create a report to help us improve our content.
+title: "[Content] "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        IMPORTANT: This is only for reporting documentation content issues.
+
+        Report Besu software issues at https://github.com/hyperledger/besu/issues.
+        Report documentation tool issues using the "Documentation tool bug report" template.
+
+        Before creating an issue, did you use the search field in the documentation to find what you're looking for?
+  - type: textarea
+    id: decription
+    attributes:
+      label: Describe the bug.
+      description: Add a clear and concise description of what the documentation issue is and what you expected the content to be.
+      placeholder: Tell us what you see!
+    validations:
+      required: true
+  - type: input
+    id: page-url
+    attributes:
+      label: What page has the issue?
+      description: Provide the URL of the page where you found this issue.
+      placeholder: Page URL
+      value: "https://besu.hyperledger.org/en/stable/"
+    validations:
+      required: true
+  - type: dropdown
+    id: issue-type
+    attributes:
+      label: Check the issue type in the following list
+      multiple: true
+      options:
+        - Missing content
+        - Outdated content
+        - Wrong content
+        - Confusing or misleading content
+        - Other
+  - type: input
+    id: other
+    attributes:
+      label: Other
+      description: If you checked other in the above list, please tell us more in this field.
+    validations:
+      required: false
+      
+  - type: textarea
+    id: change-suggestion
+    attributes:
+      label: Change suggestion
+      description: If you know how to fix the content, provide a suggestion.
+    validations:
+      required: false
+
+  - type: textarea
+    attributes:
+      label: More context
+      description: |
+       Add any other context about the problem here, for example, screenshots or a small demo video.
+
+        Tip: You can attach images files by clicking this area to highlight it and then dragging files in.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Besu documentation issue recommendations
+      description: By checking this box, you confirm that you read and followed the [Besu documentation issue guidelines](https://wiki.hyperledger.org/display/BESU/Raise+issues)
+      options:
+        - label: I read and followed this project's documentation guidelines
+          required: true
