@@ -8,6 +8,6 @@ jobs:
     - uses: actions/github-script@v6
       with:
         script: |
-          const script = require('./remotes.js')
+          import {WORKING_INDEX, FAILING_INDEX} from './remotes.js'
           console.log('WORKING_INDEX', WORKING_INDEX)
           console.log('FAILING_INDEX', FAILING_INDEX)
