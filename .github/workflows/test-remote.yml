@@ -1,16 +1,13 @@
 name: Check remote assets
-on: workflow_dispatch
+on: [push, workflow_dispatch]
 jobs:
   check-remote-assets:
     runs-on: ubuntu-20.04
-    strategy:
-      matrix:
-        remotes:
-          - 'https://nicolasmassart.github.io/test/index.html'
-          - 'https://nicolasmassart.github.io/test/index-that-fails.html'
     steps:
-    - name: Deploy Stage
-      uses: fjogeleit/http-request-action@v1
+    - uses: actions/checkout@v3
+    - uses: actions/github-script@v6
       with:
-        url: ${{ matrix['remotes'] }}
-        method: 'GET'
+        script: |
+          const script = require('./remotes.js')
+          console.log('WORKING_INDEX', WORKING_INDEX)
+          console.log('FAILING_INDEX', FAILING_INDEX)
