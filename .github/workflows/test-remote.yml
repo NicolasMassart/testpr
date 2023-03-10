@@ -1,0 +1,16 @@
+name: Check remote assets
+on: workflow_dispatch
+jobs:
+  check-remote-assets:
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        remotes:
+          - 'https://nicolasmassart.github.io/test/index.html'
+          - 'https://nicolasmassart.github.io/test/index-that-fails.html'
+    steps:
+    - name: Deploy Stage
+      uses: fjogeleit/http-request-action@v1
+      with:
+        url: ${{ matrix['remotes'] }}
+        method: 'GET'
