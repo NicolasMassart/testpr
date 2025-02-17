@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camera Access PoC</title>
+</head>
+<body>
+    <h2>Take a Picture</h2>
+    <button onclick="openCamera()">Open Camera</button>
+    <br><br>
+    <video id="video" autoplay style="width:100%; max-width:400px;"></video>
+    <br>
+    <button onclick="capturePhoto()">Capture Photo</button>
+    <br><br>
+    <canvas id="canvas" style="display:none;"></canvas>
+    <img id="photo" alt="Captured photo" style="width:100%; max-width:400px; display:none;" />
+
+    <script>
+        let videoStream;
+
+        function openCamera() {
+            navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+            .then(stream => {
+                videoStream = stream;
+                document.getElementById('video').srcObject = stream;
+            })
+            .catch(error => console.error("Error accessing camera:", error));
+        }
+
+        function capturePhoto() {
+            let video = document.getElementById('video');
+            let canvas = document.getElementById('canvas');
+            let photo = document.getElementById('photo');
+            
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+            
+            photo.src = canvas.toDataURL('image/png');
+            photo.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
